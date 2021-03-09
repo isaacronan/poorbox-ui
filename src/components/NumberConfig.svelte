@@ -15,8 +15,17 @@ const handleChange = (event) => {
     });
 };
 </script>
-<div>
-    <label>min: <input name="min" value={min} on:input={handleChange} type="text"></label>
-    <label>max: <input name="max" value={max} on:input={handleChange} type="text"></label>
-    <label>scale: <input name="scale" value={scale} on:input={handleChange} type="text"></label>
+<div class="value-controls">
+    <div class="form-control">
+        <label for="min">Min</label>
+        <input id="min" name="min" value={min} on:input={handleChange} type="text">
+    </div>
+    <div class="form-control">
+        <label for="max">Max</label>
+        <input id="max" name="max" value={max} on:input={handleChange} type="text">
+    </div>
+    <div class="form-control">
+        <label for="scale">Scale</label>
+        <input id="scale" name="scale" value={scale} on:input={handleChange} type="text">
+    </div>
 </div>

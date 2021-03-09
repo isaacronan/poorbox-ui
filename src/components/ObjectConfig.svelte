@@ -14,6 +14,13 @@ const handleAdd = () => {
     });
 };
 
+const handleDelete = (deleteIndex) => () => {
+    dispatch('valuechange', {
+        ...value,
+        fields: fields.filter((_, index) => index !== deleteIndex)
+    });
+};
+
 const handleValueChange = (changeIndex) => (event) => {
     dispatch('valuechange', {
         ...value,
@@ -36,10 +43,19 @@ const handlePresenceChange = (changeIndex) => (event) => {
 };
 </script>
 <div>
-    <div><button on:click={handleAdd}>add field</button></div>
+    <div><button class="bare-button small-heavy" on:click={handleAdd}>Add Field</button></div>
     {#each fields as { label, value: existingValue, presence }, index}
-        <label>label: <input value={label} on:input={handleLabelChange(index)} type="text"></label>
-        <label>presence: <input value={presence} on:input={handlePresenceChange(index)} type="text"></label>
+        <div class="value-controls">
+            <div class="form-control">
+                <label for="label">Label</label>
+                <input id="label" value={label} on:input={handleLabelChange(index)} type="text">
+            </div>
+            <div class="form-control">
+                <label for="presence">Presence</label>
+                <input id="presence" value={presence} on:input={handlePresenceChange(index)} type="text">
+            </div>
+            <button tabindex="-1" on:click={handleDelete(index)}>Remove Field</button>
+        </div>
         <ValueConfig value={existingValue} on:valuechange={handleValueChange(index)} />
     {/each}
 </div>

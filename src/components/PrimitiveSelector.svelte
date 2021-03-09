@@ -2,6 +2,7 @@
 import { createEventDispatcher } from 'svelte';
 
 export let value = null;
+export let hideRemove = false;
 const dispatch = createEventDispatcher();
 
 const primitiveTypes = ['null', 'true', 'false', 'string', 'number']
@@ -21,6 +22,8 @@ $: type = (() => {
     return 'string'
 })();
 
+$: isComposite = ['string', 'number'].includes(type);
+
 const handleTypeChange = (event) => {
     dispatch('primitivechange', {
         value: defaults[event.target.value]
@@ -32,14 +35,48 @@ const handleValueChange = (event) => {
         value: type === 'number' && !isNaN(event.target.value) ? Number(event.target.value) : event.target.value
     });
 };
+
+const handleDelete = () => {
+    dispatch('primitivedelete');
+};
 </script>
-<div>
-<select value={type} on:change={handleTypeChange}>
-    {#each primitiveTypes as primitiveType}
-        <option value={primitiveType}>{primitiveType}</option>
-    {/each}
-</select>
-{#if ['string', 'number'].includes(type)}
-    <input value={value} on:input={handleValueChange} type="text">
-{/if}
+<div class="primitive-selector">
+    <select class:hide-right={!hideRemove || isComposite} value={type} on:change={handleTypeChange}>
+        {#each primitiveTypes as primitiveType}
+            <option value={primitiveType}>{primitiveType}</option>
+        {/each}
+    </select>
+    {#if isComposite}
+        <input class:middle={!hideRemove} value={value} on:input={handleValueChange} type="text">
+    {/if}
+    {#if !hideRemove}
+        <button tabindex="-1" on:click={handleDelete}>Remove</button>
+    {/if}
 </div>
+<style>
+.primitive-selector {
+    display: inline-flex;
+    margin: 0 0.5rem 0.5rem 0;
+}
+
+.hide-right {
+    border-bottom-right-radius: 0;
+    border-right-color: transparent;
+    border-top-right-radius: 0;
+}
+
+input {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
+.middle {
+    border-radius: 0;
+    border-right-color: transparent;
+}
+
+button {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+</style>

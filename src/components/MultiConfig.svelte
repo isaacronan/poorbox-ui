@@ -14,6 +14,13 @@ const handleAdd = () => {
     });
 };
 
+const handleDelete = (deleteIndex) => () => {
+    dispatch('valuechange', {
+        ...value,
+        values: values.filter((_, index) => index !== deleteIndex)
+    });
+};
+
 const handleValueChange = (changeIndex) => (event) => {
     dispatch('valuechange', {
         ...value,
@@ -29,9 +36,15 @@ const handleWeightChange = (changeIndex) => (event) => {
 };
 </script>
 <div>
-    <div><button on:click={handleAdd}>add value</button></div>
+    <div><button class="bare-button small-heavy" on:click={handleAdd}>Add Value</button></div>
     {#each values as { value: existingValue, weight }, index}
-        <div><label>weight: <input value={weight} on:input={handleWeightChange(index)} type="text"></label></div>
+        <div class="value-controls">
+            <div class="form-control">
+                <label for="weight">Weight</label>
+                <input id="weight" value={weight} on:input={handleWeightChange(index)} type="text">
+            </div>
+            <button tabindex="-1" on:click={handleDelete(index)}>Remove Value</button>
+        </div>
         <ValueConfig value={existingValue} on:valuechange={handleValueChange(index)} />
     {/each}
 </div>

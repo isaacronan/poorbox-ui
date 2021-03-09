@@ -53,9 +53,59 @@ const handleCreate = () => {
     font-size: 10px;
 }
 
-label {
+input,
+select,
+button {
+    border: 1px solid black;
+    border-radius: 0.5rem;
+    outline: none;
+    padding: 0.5rem;
+}
+
+select {
+    padding-top: calc(0.5rem - 1px);
+    padding-bottom: calc(0.5rem - 1px);
+}
+
+select,
+button {
+    cursor: pointer;
+}
+
+.bare-button {
+    background-color: transparent;
+    border-color: transparent;
+    padding-left: 0;
+}
+
+.small-heavy {
+    text-transform: uppercase;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.small-heavy:hover,
+.small-heavy:focus {
+    text-decoration: underline;
+}
+
+.form-control {
     display: inline-flex;
     flex-direction: column;
 }
+
+.value-controls {
+    align-items: flex-end;
+    display: flex;
+}
+
+.value-controls .form-control {
+    margin-right: 0.5rem;
+}
 </style>
 </svelte:head>
+<style>
+h1 {
+    font-size: 2rem;
+}
+</style>

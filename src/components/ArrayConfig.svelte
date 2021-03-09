@@ -24,9 +24,15 @@ const handleValueChange = (event) => {
 };
 </script>
 <div>
-    <div>
-        <label>minlength: <input name="minlength" value={minlength} on:input={handleChange} type="text"></label>
-        <label>maxlength: <input name="maxlength" value={maxlength} on:input={handleChange} type="text"></label>
+    <div class="value-controls">
+        <div class="form-control">
+            <label for="minlength">Min Length</label>
+            <input id="minlength" name="minlength" value={minlength} on:input={handleChange} type="text">
+        </div>
+        <div class="form-control">
+            <label for="maxlength">Max Length</label>
+            <input id="maxlength" name="maxlength" value={maxlength} on:input={handleChange} type="text">
+        </div>
     </div>
     <ValueConfig value={itemValue} on:valuechange={handleValueChange} />
 </div>

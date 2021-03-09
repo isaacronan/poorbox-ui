@@ -14,6 +14,13 @@ const handleAdd = () => {
     });
 };
 
+const handleDelete = (deleteIndex) => () => {
+    dispatch('valuechange', {
+        ...value,
+        values: values.filter((_, index) => index !== deleteIndex)
+    });
+};
+
 const handleChange = (changeIndex) => (event) => {
     dispatch('valuechange', {
         ...value,
@@ -22,17 +29,17 @@ const handleChange = (changeIndex) => (event) => {
 };
 </script>
 <div>
-    {#each values as existingValue, index}
-        <PrimitiveSelector value={existingValue} on:primitivechange={handleChange(index)} />
-        {#if index === values.length - 1}
-            <button on:click={handleAdd}>add value</button>
-        {/if}
-    {/each}
+    <div><button class="bare-button small-heavy" on:click={handleAdd}>add value</button></div>
+    <div class="selectors">
+        {#each values as existingValue, index}
+            <PrimitiveSelector hideRemove={values.length <= 1} value={existingValue} on:primitivedelete={handleDelete(index)} on:primitivechange={handleChange(index)} />
+        {/each}
+    </div>
 </div>
 <style>
-div {
+.selectors {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     flex-wrap: wrap;
 }
 </style>

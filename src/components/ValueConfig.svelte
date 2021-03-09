@@ -63,11 +63,11 @@ onMount(() => {
 </script>
 <div class="value-selector">
     <div>
-        <label>value<select on:change={handleTypeChange} value={type}>
+        <select on:change={handleTypeChange} value={type}>
             {#each valueTypes as valueType}
                 <option value={valueType}>{valueType}</option>
             {/each}
-        </select></label>
+        </select>
     </div>
     <div class="type-selector">
         {#if value.type === 'number'}
@@ -84,7 +84,22 @@ onMount(() => {
     </div>
 </div>
 <style>
+.value-selector {
+    margin-bottom: 2rem;
+}
+
+select {
+    -webkit-appearance: none;
+    border: none;
+    font-size: 2rem;
+    outline: none;
+    padding: 0.5rem 1rem;
+    text-decoration: underline;
+}
+
 .type-selector {
-    padding-left: 2rem;
+    border-left: 1px solid black;
+    margin-left: 1rem;
+    padding-left: 1rem;
 }
 </style>
