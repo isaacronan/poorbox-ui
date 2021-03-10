@@ -79,7 +79,14 @@ const handleSaveConfig = () => {
     });
 };
 </script>
+<svelte:head>
+    <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="mask-icon" color="#650505" href="/pinned-tab-icon.svg">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+</svelte:head>
 <header>
+    <a href="/"><img alt="logo" height="20" src="/logo_blue.svg"></a>
     <h1>PoorBox</h1>
     <div>Endpoints for the needy.</div>
 </header>
@@ -116,6 +123,11 @@ header {
     align-items: center;
     display: flex;
     padding: 1rem 0.5rem;
+}
+
+header a {
+    display: flex;
+    padding: 0 1rem;
 }
 
 main {
