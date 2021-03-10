@@ -21,8 +21,10 @@ const handleValueChange = (event) => {
 };
 
 const updateValue = (value) => {
-    valueHistory = [...valueHistory.slice(0, historyIndex + 1), { ...value }]
-    historyIndex = valueHistory.length - 1;
+    if (JSON.stringify(rootValue) !== JSON.stringify(value)) {
+        valueHistory = [...valueHistory.slice(0, historyIndex + 1), { ...value }]
+        historyIndex = valueHistory.length - 1;
+    }
 };
 
 const handleUndo = () => {
@@ -99,10 +101,10 @@ const handleSaveConfig = () => {
         </div>
     {/if}
     <div class="button-group">
-        <button disabled={historyIndex === 0} on:click={handleUndo}>Undo</button>
-        <button disabled={historyIndex === valueHistory.length - 1} on:click={handleRedo}>Redo</button>
-        <button on:click={handleTestConfig}>Test</button>
-        <button on:click={handleSaveConfig}>Create Endpoint</button>
+        <button class="button button-primary" disabled={historyIndex === 0} on:click={handleUndo}>Undo</button>
+        <button class="button button-primary" disabled={historyIndex === valueHistory.length - 1} on:click={handleRedo}>Redo</button>
+        <button class="button button-primary" on:click={handleTestConfig}>Test</button>
+        <button class="button button-primary" on:click={handleSaveConfig}>Create Endpoint</button>
     </div>
     <ValueConfig on:valuechange={handleValueChange} value={rootValue} />
 </main>
@@ -110,6 +112,15 @@ const handleSaveConfig = () => {
 <style>
 :root {
     --dark: black;
+    --grey: #c1c1c1;
+    --white: #ffffff;
+    --blue1: #1e7c98;
+    --blue2: #5ba0b5;
+    --blue3: #0e3c4a;
+    --red1: #662525;
+    --red2: #8a5858;
+    --red3: #540f0f;
+    --redpale: #ffcccc;
     font-size: 10px;
 }
 
@@ -134,7 +145,7 @@ input {
 }
 
 .error {
-    background-color: red;
+    background-color: var(--redpale);
 }
 
 select {
@@ -147,8 +158,35 @@ button {
     cursor: pointer;
 }
 
-button[disabled] {
-    background-color: grey;
+.button-primary {
+    --normal: var(--blue1);
+    --hover: var(--blue2);
+    --active: var(--blue3);
+}
+
+.button-negative {
+    --normal: var(--red1);
+    --hover: var(--red2);
+    --active: var(--red3);
+}
+
+.button {
+    background-color: var(--normal);
+    border-color: transparent;
+    color: var(--white);
+}
+
+.button:hover:not(:disabled),
+.button:focus:not(:disabled) {
+    background-color: var(--hover);
+}
+
+.button:active:not(:disabled) {
+    background-color: var(--active);
+}
+
+.button:disabled {
+    background-color: var(--grey);
 }
 
 label {
@@ -173,7 +211,7 @@ label {
 }
 
 .value-selector:focus-within .value-selector:not(:focus-within) {
-    --dark: rgba(0, 0, 0, 0.2);
+    --dark: rgba(0, 0, 0, 0.4);
 }
 
 .form-control {

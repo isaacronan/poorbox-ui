@@ -46,9 +46,11 @@ const handleWeightChange = (changeIndex) => (event) => {
                 <label for="weight">Weight</label>
                 <input id="weight" value={weight} class:error={!weightIsValid(index)} on:input={handleWeightChange(index)} type="text">
             </div>
-            <div class="form-control">
-                <button tabindex="-1" on:click={handleDelete(index)}>Remove Value</button>
-            </div>
+            {#if values.length > 1}
+                <div class="form-control">
+                    <button class="button button-negative" tabindex="-1" on:click={handleDelete(index)}>Remove Value</button>
+                </div>
+            {/if}
         </div>
         <ValueConfig value={existingValue} on:valuechange={handleValueChange(index)} />
     {/each}

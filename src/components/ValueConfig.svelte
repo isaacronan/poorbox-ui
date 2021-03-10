@@ -64,9 +64,14 @@ select {
     background-color: transparent;
     border: none;
     font-size: 2rem;
+    font-weight: bold;
     outline: none;
     padding: 0;
     margin-bottom: 0.5rem;
+}
+
+select:hover,
+select:focus {
     text-decoration: underline;
 }
 
