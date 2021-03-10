@@ -134,6 +134,10 @@ button {
     padding: 0.5rem;
 }
 
+.error {
+    background-color: red;
+}
+
 select {
     padding-top: calc(0.5rem - 1px);
     padding-bottom: calc(0.5rem - 1px);

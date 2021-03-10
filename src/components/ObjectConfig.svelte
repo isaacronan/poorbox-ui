@@ -5,6 +5,9 @@ import ValueConfig from './ValueConfig.svelte';
     
 export let value = {};
 $: fields = value.fields;
+$: labelIsValid = (index) => !!fields[index].label;
+$: presenceIsValid = (index) => fields[index].presence === Number(fields[index].presence) &&
+    fields[index].presence >= 0 && fields[index].presence <= 1;
 
 const dispatch = createEventDispatcher();
 
@@ -39,7 +42,7 @@ const handleLabelChange = (changeIndex) => (event) => {
 const handlePresenceChange = (changeIndex) => (event) => {
     dispatch('valuechange', {
         ...value,
-        fields: fields.map((field, index) => index === changeIndex ? { ...field, presence: Number.parseInt(event.target.value) } : field)
+        fields: fields.map((field, index) => index === changeIndex ? { ...field, presence: isNaN(event.target.value) ? event.target.value : Number(event.target.value) } : field)
     });
 };
 </script>
@@ -49,11 +52,11 @@ const handlePresenceChange = (changeIndex) => (event) => {
         <div class="value-controls">
             <div class="form-control">
                 <label for="label">Label</label>
-                <input id="label" value={label} on:input={handleLabelChange(index)} type="text">
+                <input id="label" value={label} class:error={!labelIsValid(index)} on:input={handleLabelChange(index)} type="text">
             </div>
             <div class="form-control">
                 <label for="presence">Presence</label>
-                <input id="presence" value={presence} on:input={handlePresenceChange(index)} type="text">
+                <input id="presence" value={presence} class:error={!presenceIsValid(index)} on:input={handlePresenceChange(index)} type="text">
             </div>
             <button tabindex="-1" on:click={handleDelete(index)}>Remove Field</button>
         </div>

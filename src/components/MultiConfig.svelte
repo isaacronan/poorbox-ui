@@ -5,6 +5,8 @@ import ValueConfig from './ValueConfig.svelte';
     
 export let value = {};
 $: values = value.values;
+$: weightIsValid = (index) => values[index].weight === Number(values[index].weight) &&
+    values[index].weight >= 0 && Number.isInteger(values[index].weight);
 
 const dispatch = createEventDispatcher();
 
@@ -32,7 +34,7 @@ const handleValueChange = (changeIndex) => (event) => {
 const handleWeightChange = (changeIndex) => (event) => {
     dispatch('valuechange', {
         ...value,
-        values: values.map((existingValue, index) => index === changeIndex ? { ...existingValue, weight: Number.parseInt(event.target.value) } : existingValue)
+        values: values.map((existingValue, index) => index === changeIndex ? { ...existingValue, weight: isNaN(event.target.value) ? event.target.value : Number(event.target.value) } : existingValue)
     });
 };
 </script>
@@ -42,7 +44,7 @@ const handleWeightChange = (changeIndex) => (event) => {
         <div class="value-controls">
             <div class="form-control">
                 <label for="weight">Weight</label>
-                <input id="weight" value={weight} on:input={handleWeightChange(index)} type="text">
+                <input id="weight" value={weight} class:error={!weightIsValid(index)} on:input={handleWeightChange(index)} type="text">
             </div>
             <button tabindex="-1" on:click={handleDelete(index)}>Remove Value</button>
         </div>
