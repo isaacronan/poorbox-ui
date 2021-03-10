@@ -55,7 +55,7 @@ const handleValueChange = (event) => {
 .value-selector {
     border: 1px solid var(--dark);
     border-radius: 1rem;
-    margin: 1rem 0;
+    margin-bottom: 1rem;
     padding: 1rem;
 }
 

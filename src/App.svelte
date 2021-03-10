@@ -1,4 +1,5 @@
 <script>
+import { fade } from 'svelte/transition';
 import ValueConfig from './components/ValueConfig.svelte';
 import { typeDefaults } from './utils/typeDefaults';
 import { saveConfig, getConfig, testConfig, deleteConfig } from './utils/http';
@@ -9,6 +10,8 @@ let mockData = null;
 let savedEndpoint = null;
 let preloadedData = '';
 let error = '';
+
+$: if (error) setTimeout(() => error = '');
 
 $: rootValue = historyIndex === null ? {} : valueHistory[historyIndex];
 
@@ -35,7 +38,6 @@ const handlePreloadedData = (event) => {
     const pattern = /.*(\w{8})\s*$/;
     if (pattern.test(preloadedData)) {
         const id = pattern.exec(preloadedData)[1];
-        preloadedData = '';
         getConfig(id).then(data => {
             savedEndpoint = data;
             rootValue = { ...data.schema };
@@ -47,8 +49,6 @@ const handlePreloadedData = (event) => {
             updateValue(JSON.parse(preloadedData))
         } catch {
             error = 'JSON syntax is invalid.';
-        } finally {
-            preloadedData = '';
         }
     }
 };
@@ -63,7 +63,7 @@ const handleDeleteConfig = () => {
 
 const handleTestConfig = () => {
     testConfig(rootValue).then(data => {
-        mockData = data;
+        mockData = JSON.stringify(data);
     }).catch((err) => {
         error = err.error;
     });
@@ -79,19 +79,17 @@ const handleSaveConfig = () => {
 </script>
 <main>
     <h1>poorbox</h1>
-    <div>
-        <textarea placeholder="Paste an existing JSON config or endpoint URL..." value={preloadedData} on:input={handlePreloadedData} type="text" />
+    <div class="previews">
+        <textarea placeholder="Paste existing config or URL..." value={JSON.stringify(rootValue)} on:input={handlePreloadedData} type="text" />
+        {#if mockData !== null}
+            <div class="test">{mockData}</div>
+        {/if}
+        {#if error}
+            <div out:fade={{ duration: 400, delay: 1600 }} class="error-message">{error}</div>
+        {/if}
     </div>
-    {#if error}
-        <div>{error} <button on:click={() => error = ''} class="small-heavy bare-button">Dismiss</button></div>
-    {/if}
-    <div class="button-group">
-        <button on:click={handleTestConfig}>Test</button>
-        <button on:click={handleSaveConfig}>Create Endpoint</button>
-    </div>
-    
     {#if savedEndpoint}
-        <div>
+        <div class="endpoint">
             <div class="url">
                 <div>GET</div>
                 <div>{savedEndpoint.url}</div>
@@ -100,16 +98,11 @@ const handleSaveConfig = () => {
             <div>Endpoint will be removed after {savedEndpoint.expiration} seconds of inactivity.</div>
         </div>
     {/if}
-    {#if mockData !== null}
-        <div class="preview">{JSON.stringify(mockData)}</div>
-    {/if}
-    <div class="history button-group">
+    <div class="button-group">
         <button disabled={historyIndex === 0} on:click={handleUndo}>Undo</button>
         <button disabled={historyIndex === valueHistory.length - 1} on:click={handleRedo}>Redo</button>
-    </div>
-    <div>
-        <div>JSON Config:</div>
-        <div>{JSON.stringify(rootValue)}</div>
+        <button on:click={handleTestConfig}>Test</button>
+        <button on:click={handleSaveConfig}>Create Endpoint</button>
     </div>
     <ValueConfig on:valuechange={handleValueChange} value={rootValue} />
 </main>
@@ -126,12 +119,18 @@ body {
 
 input,
 select,
-button {
+button,
+textarea {
     border: 1px solid var(--dark);
     border-radius: 0.5rem;
     color: var(--dark);
     outline: none;
     padding: 0.5rem;
+}
+
+input {
+    box-sizing: border-box;
+    width: 100px;
 }
 
 .error {
@@ -186,25 +185,55 @@ label {
 .button-group {
     align-items: flex-end;
     display: flex;
+    flex-wrap: wrap;
 }
 
 .value-controls .form-control,
 .button-group button {
-    margin-right: 0.5rem;
+    margin: 0 0.5rem 0.5rem 0;
 }
 </style>
 </svelte:head>
 <style>
 h1 {
     font-size: 2rem;
+    margin: 1rem 0;
 }
 
-.preview {
-    border-radius: 1rem;
-    max-height: 100px;
+.endpoint {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin: 1rem 0;
+}
+
+.previews {
+    display: flex;
+    height: 100px;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+textarea,
+.test {
+    flex-basis: 200px;
+}
+
+textarea {
+    resize: none;
+}
+
+.test {
+    flex-grow: 1;
     overflow-y: auto;
-    padding: 1rem;
-    word-wrap: break-word;
+    padding-left: 0.5rem;
+    word-break: break-word;
+}
+
+.error-message {
+    position: absolute;
+    left: 0.5rem;
+    top: 100%;
 }
 
 .url {
@@ -215,9 +244,5 @@ h1 {
 
 .url > * {
     margin-right: 1rem;
-}
-
-.history {
-    margin: 1rem 0;
 }
 </style>
