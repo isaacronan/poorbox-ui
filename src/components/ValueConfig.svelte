@@ -1,5 +1,5 @@
 <script>
-import { createEventDispatcher, onMount } from 'svelte';
+import { createEventDispatcher } from 'svelte';
 import ArrayConfig from './ArrayConfig.svelte';
 import MultiConfig from './MultiConfig.svelte';
 import NumberConfig from './NumberConfig.svelte';
@@ -28,13 +28,6 @@ const handleValueChange = (event) => {
         ...event.detail
     });
 };
-
-onMount(() => {
-    // dispatch('valuechange', {
-    //     ...value,
-    //     ...typeDefaults.number
-    // });
-});
 </script>
 <div class="value-selector">
     <div>
@@ -62,7 +55,7 @@ onMount(() => {
 .value-selector {
     border: 1px solid var(--dark);
     border-radius: 1rem;
-    margin: 1rem;
+    margin: 1rem 0;
     padding: 1rem;
 }
 
@@ -72,13 +65,12 @@ select {
     border: none;
     font-size: 2rem;
     outline: none;
-    padding: 0.5rem 1rem;
+    padding: 0;
+    margin-bottom: 0.5rem;
     text-decoration: underline;
 }
 
 .type-selector {
-    /* border-left: 1px solid var(--dark); */
-    margin-left: 1rem;
-    padding-left: 1rem;
+    padding-left: 2rem;
 }
 </style>
