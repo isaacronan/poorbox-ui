@@ -1,5 +1,6 @@
 <script>
 import { createEventDispatcher } from 'svelte';
+import { typeDefaults } from '../utils/typeDefaults';
 import ValueConfig from './ValueConfig.svelte';
     
 export let value = {};
@@ -10,7 +11,7 @@ const dispatch = createEventDispatcher();
 const handleAdd = () => {
     dispatch('valuechange', {
         ...value,
-        values: [...values, { value: {}, weight: 1 }]
+        values: [...values, { value: { ...typeDefaults.number }, weight: 1 }]
     });
 };
 

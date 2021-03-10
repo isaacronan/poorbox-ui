@@ -1,13 +1,26 @@
 <script>
 import ValueConfig from './components/ValueConfig.svelte';
+import { typeDefaults } from './utils/typeDefaults';
 
-let rootValue = {};
+let valueHistory = [typeDefaults.number];
+let historyIndex = valueHistory.length - 1;
 let mockData = null;
 let url = null;
 
+$: rootValue = historyIndex === null ? {} : valueHistory[historyIndex];
+
 const handleValueChange = (event) => {
-    rootValue = { ...event.detail };
-    console.log(rootValue);
+    valueHistory = [...valueHistory.slice(0, historyIndex + 1), { ...event.detail }]
+    historyIndex = valueHistory.length - 1;
+    console.log(valueHistory[historyIndex]);
+};
+
+const handleUndo = () => {
+    historyIndex = Math.max(0, historyIndex - 1);
+};
+
+const handleRedo = () => {
+    historyIndex = Math.min(valueHistory.length - 1, historyIndex + 1);
 };
 
 const handleFetch = () => {
@@ -35,6 +48,10 @@ const handleCreate = () => {
 </script>
 <main>
     <h1>poorbox</h1>
+    <div class="history">
+        <button disabled={historyIndex === 0} on:click={handleUndo}>Undo</button>
+        <button disabled={historyIndex === valueHistory.length - 1} on:click={handleRedo}>Redo</button>
+    </div>
     <div>
         <button on:click={handleFetch}>test</button>
         <button on:click={handleCreate}>create endpoint</button>
@@ -50,14 +67,20 @@ const handleCreate = () => {
 <svelte:head>
 <style>
 :root {
+    --dark: black;
     font-size: 10px;
+}
+
+body {
+    color: var(--dark);
 }
 
 input,
 select,
 button {
-    border: 1px solid black;
+    border: 1px solid var(--dark);
     border-radius: 0.5rem;
+    color: var(--dark);
     outline: none;
     padding: 0.5rem;
 }
@@ -70,6 +93,14 @@ select {
 select,
 button {
     cursor: pointer;
+}
+
+button[disabled] {
+    background-color: grey;
+}
+
+label {
+    color: var(--dark);
 }
 
 .bare-button {
@@ -87,6 +118,10 @@ button {
 .small-heavy:hover,
 .small-heavy:focus {
     text-decoration: underline;
+}
+
+.value-selector:focus-within .value-selector:not(:focus-within) {
+    --dark: grey;
 }
 
 .form-control {
@@ -107,5 +142,11 @@ button {
 <style>
 h1 {
     font-size: 2rem;
+}
+
+textarea {
+    resize: vertical;
+    height: 100px;
+    width: 100%;
 }
 </style>

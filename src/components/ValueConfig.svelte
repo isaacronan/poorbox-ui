@@ -6,34 +6,9 @@ import NumberConfig from './NumberConfig.svelte';
 import ObjectConfig from './ObjectConfig.svelte';
 import PrimitiveConfig from './PrimitiveConfig.svelte';
 
-export let value = {};
+import { typeDefaults } from '../utils/typeDefaults';
 
-const typeDefaults = {
-    primitive: {
-        type: 'primitive',
-        values: ['']
-    },
-    number: {
-        type: 'number',
-        min: 0,
-        max: 1,
-        scale: 1
-    },
-    array: {
-        type: 'array',
-        minlength: 0,
-        maxlength: 1,
-        value: {}
-    },
-    multi: {
-        type: 'multi',
-        values: [{ value: {}, weight: 1 }]
-    },
-    object: {
-        type: 'object',
-        fields: [{ label: '', value: {}, presence: 1 }]
-    }
-}
+export let value = {};
 
 $: type = value.type;
 $: valueTypes = Object.keys(typeDefaults);
@@ -52,13 +27,13 @@ const handleValueChange = (event) => {
         ...value,
         ...event.detail
     });
-}
+};
 
 onMount(() => {
-    dispatch('valuechange', {
-        ...value,
-        ...typeDefaults.number
-    });
+    // dispatch('valuechange', {
+    //     ...value,
+    //     ...typeDefaults.number
+    // });
 });
 </script>
 <div class="value-selector">
@@ -85,11 +60,15 @@ onMount(() => {
 </div>
 <style>
 .value-selector {
-    margin-bottom: 2rem;
+    border: 1px solid var(--dark);
+    border-radius: 1rem;
+    margin: 1rem;
+    padding: 1rem;
 }
 
 select {
     -webkit-appearance: none;
+    background-color: transparent;
     border: none;
     font-size: 2rem;
     outline: none;
@@ -98,7 +77,7 @@ select {
 }
 
 .type-selector {
-    border-left: 1px solid black;
+    /* border-left: 1px solid var(--dark); */
     margin-left: 1rem;
     padding-left: 1rem;
 }
