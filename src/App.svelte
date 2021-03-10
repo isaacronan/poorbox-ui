@@ -104,7 +104,7 @@ const handleSaveConfig = () => {
         <div class="endpoint">
             <div class="url">
                 <div>GET</div>
-                <div>{savedEndpoint.url}</div>
+                <div>{`${window.location.origin}${savedEndpoint.url}`}</div>
                 <button on:click={handleDeleteConfig} class="small-heavy bare-button">Delete</button>
             </div>
             <div>Endpoint will be removed after {savedEndpoint.expiration} seconds of inactivity.</div>
