@@ -1,6 +1,7 @@
 require('dotenv').config()
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = (env) => {
     const isProduction = !!env.production;
@@ -25,12 +26,24 @@ module.exports = (env) => {
                         loader: 'svelte-loader',
                         options: {
                             compilerOptions: {
-                                dev: !isProduction
+                                dev: !isProduction,
+                                hydratable: true
                             },
-                            // emitCss: isProduction,
+                            emitCss: isProduction,
                             hotReload: !isProduction
                         }
                     }
+                },
+                {
+                    test: /\.css$/,
+                    use: [
+                        isProduction ? {
+                            loader: MiniCssExtractPlugin.loader
+                        } : 'style-loader',
+                        {
+                            loader: 'css-loader'
+                        }
+                    ]
                 }
             ]
         },
@@ -38,6 +51,9 @@ module.exports = (env) => {
             new HtmlWebpackPlugin({
                 title: 'PoorBox',
                 filename: isProduction ? 'poorbox.html' : 'index.html'
+            }),
+            new MiniCssExtractPlugin({
+                filename: '[fullhash].styles.css'
             })
         ],
         devServer: {
