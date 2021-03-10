@@ -79,10 +79,13 @@ const handleSaveConfig = () => {
     });
 };
 </script>
+<header>
+    <h1>PoorBox</h1>
+    <div>Endpoints for the needy.</div>
+</header>
 <main>
-    <h1>poorbox</h1>
     <div class="previews">
-        <textarea placeholder="Paste existing config or URL..." value={JSON.stringify(rootValue)} on:input={handlePreloadedData} type="text" />
+        <textarea spellcheck="false" placeholder="Paste existing config or URL..." value={JSON.stringify(rootValue)} on:input={handlePreloadedData} type="text" />
         {#if mockData !== null}
             <div class="test">{mockData}</div>
         {/if}
@@ -121,11 +124,23 @@ const handleSaveConfig = () => {
     --red2: #8a5858;
     --red3: #540f0f;
     --redpale: #ffcccc;
+    --fs-small: 1.0rem;
+    --fs-normal: 1.3rem;
+    --fs-medium: 1.8rem;
+    --fs-big: 2.4rem;
     font-size: 10px;
 }
 
 body {
     color: var(--dark);
+    font-size: var(--fs-normal);
+    font-family: sans-serif;
+    margin: 0;
+}
+
+h1 {
+    font-size: var(--fs-big);
+    margin: 0;
 }
 
 input,
@@ -135,8 +150,14 @@ textarea {
     border: 1px solid var(--dark);
     border-radius: 0.5rem;
     color: var(--dark);
+    font-size: var(--fs-normal);
     outline: none;
     padding: 0.5rem;
+}
+
+textarea::placeholder {
+    color: var(--grey);
+    font-family: sans-serif;
 }
 
 input {
@@ -191,6 +212,7 @@ button {
 
 label {
     color: var(--dark);
+    font-size: var(--fs-small);
 }
 
 .bare-button {
@@ -201,7 +223,7 @@ label {
 
 .small-heavy {
     text-transform: uppercase;
-    font-size: 1rem;
+    font-size: var(--fs-small);
     font-weight: bold;
 }
 
@@ -233,9 +255,18 @@ label {
 </style>
 </svelte:head>
 <style>
+header {
+    align-items: center;
+    display: flex;
+    padding: 1rem 0.5rem;
+}
+
+main {
+    padding: 0.5rem;
+}
+
 h1 {
-    font-size: 2rem;
-    margin: 1rem 0;
+    margin-right: 1rem;
 }
 
 .endpoint {
@@ -254,33 +285,44 @@ h1 {
 
 textarea,
 .test {
+    font-family: monospace;
     flex-basis: 200px;
 }
 
 textarea {
+    font-size: var(--fs-small);
     resize: none;
 }
 
 .test {
     flex-grow: 1;
+    font-size: var(--fs-medium);
     overflow-y: auto;
     padding-left: 0.5rem;
     word-break: break-word;
 }
 
 .error-message {
-    position: absolute;
+    color: var(--red1);
+    font-size: var(--fs-small);
+    font-weight: bold;
     left: 0.5rem;
+    position: absolute;
     top: 100%;
 }
 
 .url {
     align-items: center;
     display: flex;
-    font-size: 3rem;
+    font-size: var(--fs-big);
+    font-family: monospace;
 }
 
 .url > * {
     margin-right: 1rem;
+}
+
+.url > button {
+    color: var(--red1);
 }
 </style>

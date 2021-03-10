@@ -63,7 +63,7 @@ select {
     -webkit-appearance: none;
     background-color: transparent;
     border: none;
-    font-size: 2rem;
+    font-size: var(--fs-medium);
     font-weight: bold;
     outline: none;
     padding: 0;
