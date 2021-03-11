@@ -1,7 +1,7 @@
 <script>
 import { fade } from 'svelte/transition';
 import ValueConfig from './components/ValueConfig.svelte';
-import { typeDefaults } from './utils/typeDefaults';
+import { typeDefaults, typeExamples } from './utils/typeDefaults';
 import { saveConfig, getConfig, testConfig, deleteConfig } from './utils/http';
 
 let valueHistory = [typeDefaults.number];
@@ -26,6 +26,8 @@ const updateValue = (value) => {
         historyIndex = valueHistory.length - 1;
     }
 };
+
+const handleDefault = (type) => () => updateValue(typeExamples[type]);
 
 const handleUndo = () => {
     historyIndex = Math.max(0, historyIndex - 1);
@@ -91,6 +93,14 @@ const handleSaveConfig = () => {
     <div>Endpoints for the needy.</div>
 </header>
 <main>
+    <p>
+        Create endpoints to return complex random data structures. Use the types
+        <span on:click={handleDefault('primitive')} class="button-primary" tabindex="-1">primitive</span>,
+        <span on:click={handleDefault('number')} class="button-primary" tabindex="-1">number</span>,
+        <span on:click={handleDefault('array')} class="button-primary" tabindex="-1">array</span>,
+        <span on:click={handleDefault('object')} class="button-primary" tabindex="-1">object</span>, and
+        <span on:click={handleDefault('multi')} class="button-primary" tabindex="-1">multi</span>.
+    </p>
     <div class="previews">
         <textarea spellcheck="false" placeholder="Paste existing config or URL..." value={JSON.stringify(rootValue)} on:input={handlePreloadedData} type="text" />
         {#if mockData !== null}
@@ -136,6 +146,27 @@ main {
 
 h1 {
     margin-right: 1rem;
+}
+
+p {
+    font-size: var(--fs-medium);
+    margin-bottom: 1rem;
+}
+
+p span {
+    color: var(--normal);
+    cursor: pointer;
+    font-weight: bold;
+    outline: none;
+}
+
+p span:hover {
+    color: var(--hover);
+    text-decoration: underline;
+}
+
+p span:active:not(:disabled) {
+    color: var(--active);
 }
 
 .endpoint {

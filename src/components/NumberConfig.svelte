@@ -30,7 +30,7 @@ const handleChange = (event) => {
         <input id="max" name="max" value={max} class:error={!maxIsValid || maxIsLow} on:input={handleChange} type="text">
     </div>
     <div class="form-control">
-        <label for="scale">Scale</label>
+        <label for="scale">Decimals</label>
         <input id="scale" name="scale" value={scale} class:error={!scaleIsValid} on:input={handleChange} type="text">
     </div>
 </div>
