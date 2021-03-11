@@ -64,7 +64,7 @@ select {
     background-color: transparent;
     border: none;
     font-size: var(--fs-medium);
-    font-weight: bold;
+    font-weight: 700;
     outline: none;
     padding: 0;
     margin-bottom: 0.5rem;

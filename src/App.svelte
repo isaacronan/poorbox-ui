@@ -86,6 +86,8 @@ const handleSaveConfig = () => {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="mask-icon" color="#650505" href="/pinned-tab-icon.svg">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
 </svelte:head>
 <header>
     <a href="/"><img alt="logo" height="20" src="/logo_blue.svg"></a>
@@ -107,7 +109,7 @@ const handleSaveConfig = () => {
             <div class="test">{mockData}</div>
         {/if}
         {#if error}
-            <div out:fade={{ duration: 400, delay: 1600 }} class="error-message">{error}</div>
+            <div out:fade={{ duration: 400, delay: 1700 }} class="error-message">{error}</div>
         {/if}
     </div>
     {#if savedEndpoint}
@@ -156,7 +158,7 @@ p {
 p span {
     color: var(--normal);
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 700;
     outline: none;
 }
 
@@ -185,16 +187,19 @@ p span:active:not(:disabled) {
 
 textarea,
 .test {
-    font-family: monospace;
+    font-family: 'Inconsolata', monospace;
     flex-basis: 100%;
     height: 50px;
 }
 
 textarea {
+    font-family: 'Inconsolata', monospace;
+    font-weight: 400;
     margin-bottom: 0.5rem;
 }
 
 .test {
+    font-weight: 700;
     height: 100px;
 }
 
@@ -228,7 +233,7 @@ textarea {
 .error-message {
     color: var(--red1);
     font-size: var(--fs-small);
-    font-weight: bold;
+    font-weight: 700;
     left: 0.5rem;
     position: absolute;
     top: 100%;
@@ -238,7 +243,8 @@ textarea {
     align-items: flex-start;
     display: flex;
     font-size: var(--fs-normal);
-    font-family: monospace;
+    font-family: 'Inconsolata', monospace;
+    font-weight: 700;
     flex-direction: column;
     margin-bottom: 1rem;
 }
