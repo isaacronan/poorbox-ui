@@ -170,7 +170,7 @@ p span:active:not(:disabled) {
 }
 
 .endpoint {
-    align-items: center;
+    align-items: flex-start;
     display: flex;
     flex-direction: column;
     margin: 1rem 0;
@@ -178,7 +178,7 @@ p span:active:not(:disabled) {
 
 .previews {
     display: flex;
-    height: 100px;
+    flex-wrap: wrap;
     margin-bottom: 2rem;
     position: relative;
 }
@@ -186,7 +186,31 @@ p span:active:not(:disabled) {
 textarea,
 .test {
     font-family: monospace;
-    flex-basis: 200px;
+    flex-basis: 100%;
+    height: 50px;
+}
+
+textarea {
+    margin-bottom: 0.5rem;
+}
+
+.test {
+    height: 100px;
+}
+
+@media screen and (min-width: 768px) {
+    .previews {
+        flex-wrap: nowrap;
+        height: 100px;
+        margin-bottom: 2rem;
+    }
+    
+    textarea,
+    .test {
+        flex-basis: 200px;
+        height: auto;
+        margin-bottom: 0;
+    }
 }
 
 textarea {
@@ -212,10 +236,25 @@ textarea {
 }
 
 .url {
-    align-items: center;
+    align-items: flex-start;
     display: flex;
-    font-size: var(--fs-big);
+    font-size: var(--fs-normal);
     font-family: monospace;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+@media screen and (min-width: 768px) {
+    .endpoint {
+        align-items: center;
+    }
+
+    .url {
+        align-items: center;
+        font-size: var(--fs-big);
+        flex-direction: row;
+        margin-bottom: 0;
+    }
 }
 
 .url > * {
