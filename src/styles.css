@@ -36,10 +36,13 @@ input,
 select,
 button,
 textarea {
+    -webkit-appearance: none;
+    background-color: var(--white);
     border: 1px solid var(--dark);
     border-radius: 0.5rem;
     color: var(--dark);
     font-size: var(--fs-normal);
+    margin: 0;
     outline: none;
     padding: 0.5rem;
 }
@@ -95,8 +98,25 @@ button {
     background-color: var(--active);
 }
 
-.button:disabled {
+.button-alt {
+    border-color: var(--normal);
+    color: var(--normal);
+}
+
+.button-alt:hover:not(:disabled),
+.button-alt:focus:not(:disabled) {
+    color: var(--hover);
+}
+
+.button-alt:active:not(:disabled) {
+    color: var(--active);
+}
+
+.button:disabled,
+.button-alt:disabled {
+    border-color: transparent;
     background-color: var(--grey);
+    color: var(--white);
 }
 
 label {

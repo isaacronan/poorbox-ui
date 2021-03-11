@@ -121,8 +121,8 @@ const handleSaveConfig = () => {
         </div>
     {/if}
     <div class="button-group">
-        <button class="button button-primary" disabled={historyIndex === 0} on:click={handleUndo}>Undo</button>
-        <button class="button button-primary" disabled={historyIndex === valueHistory.length - 1} on:click={handleRedo}>Redo</button>
+        <button class="button-alt button-primary" disabled={historyIndex === 0} on:click={handleUndo}>Undo</button>
+        <button class="button-alt button-primary" disabled={historyIndex === valueHistory.length - 1} on:click={handleRedo}>Redo</button>
         <button class="button button-primary" on:click={handleTestConfig}>Test</button>
         <button class="button button-primary" on:click={handleSaveConfig}>Create Endpoint</button>
     </div>

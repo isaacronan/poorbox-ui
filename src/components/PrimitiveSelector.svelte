@@ -41,7 +41,7 @@ const handleDelete = () => {
 };
 </script>
 <div class="primitive-selector">
-    <select class:hide-right={!hideRemove || isComposite} value={type} on:change={handleTypeChange}>
+    <select class="button button-primary" class:hide-right={!hideRemove || isComposite} value={type} on:change={handleTypeChange}>
         {#each primitiveTypes as primitiveType}
             <option value={primitiveType}>{primitiveType}</option>
         {/each}
@@ -50,7 +50,7 @@ const handleDelete = () => {
         <input class:middle={!hideRemove} value={value} on:input={handleValueChange} type="text">
     {/if}
     {#if !hideRemove}
-        <button tabindex="-1" on:click={handleDelete}>Remove</button>
+        <button class="button-alt button-negative" tabindex="-1" on:click={handleDelete}>Remove</button>
     {/if}
 </div>
 <style>
@@ -61,7 +61,6 @@ const handleDelete = () => {
 
 .hide-right {
     border-bottom-right-radius: 0;
-    border-right-color: transparent;
     border-top-right-radius: 0;
 }
 
@@ -72,6 +71,7 @@ input {
 
 .middle {
     border-radius: 0;
+    border-left-color: transparent;
     border-right-color: transparent;
 }
 
