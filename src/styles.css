@@ -14,6 +14,7 @@
     --fs-medium: 1.8rem;
     --fs-big: 2.4rem;
     font-size: 10px;
+    touch-action: manipulation;
 }
 
 body {
@@ -21,6 +22,11 @@ body {
     font-size: var(--fs-normal);
     font-family: sans-serif;
     margin: 0;
+    padding:
+        env(safe-area-inset-top, 0)
+        env(safe-area-inset-right, 0)
+        env(safe-area-inset-bottom, 0)
+        env(safe-area-inset-left, 0);
 }
 
 h1 {
@@ -41,10 +47,25 @@ textarea {
     border: 1px solid var(--dark);
     border-radius: 0.5rem;
     color: var(--dark);
-    font-size: var(--fs-normal);
+    font-size: var(--fs-medium);
     margin: 0;
     outline: none;
     padding: 0.5rem;
+}
+
+button {
+    font-size: var(--fs-normal);
+}
+
+@media screen and (min-width: 768px) {
+    input,
+    select {
+        font-size: var(--fs-normal);
+    }
+
+    textarea {
+        font-size: var(--fs-small);
+    }
 }
 
 textarea::placeholder {
@@ -55,6 +76,11 @@ textarea::placeholder {
 input {
     box-sizing: border-box;
     width: 100px;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
 }
 
 .error {

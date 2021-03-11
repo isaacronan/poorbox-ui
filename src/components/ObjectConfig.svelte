@@ -56,7 +56,7 @@ const handlePresenceChange = (changeIndex) => (event) => {
             </div>
             <div class="form-control">
                 <label for="presence">Presence</label>
-                <input id="presence" value={presence} class:error={!presenceIsValid(index)} on:input={handlePresenceChange(index)} type="text">
+                <input id="presence" value={presence} class:error={!presenceIsValid(index)} on:input={handlePresenceChange(index)} type="number">
             </div>
             <div class="form-control">
                 <button class="button button-negative" tabindex="-1" on:click={handleDelete(index)}>Remove Field</button>

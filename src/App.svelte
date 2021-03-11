@@ -214,7 +214,6 @@ textarea {
 }
 
 textarea {
-    font-size: var(--fs-small);
     resize: none;
 }
 

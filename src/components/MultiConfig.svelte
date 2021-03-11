@@ -44,7 +44,7 @@ const handleWeightChange = (changeIndex) => (event) => {
         <div class="value-controls">
             <div class="form-control">
                 <label for="weight">Weight</label>
-                <input id="weight" value={weight} class:error={!weightIsValid(index)} on:input={handleWeightChange(index)} type="text">
+                <input id="weight" value={weight} class:error={!weightIsValid(index)} on:input={handleWeightChange(index)} type="number">
             </div>
             {#if values.length > 1}
                 <div class="form-control">

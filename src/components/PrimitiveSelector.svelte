@@ -47,7 +47,7 @@ const handleDelete = () => {
         {/each}
     </select>
     {#if isComposite}
-        <input class:middle={!hideRemove} value={value} on:input={handleValueChange} type="text">
+        <input class:middle={!hideRemove} value={value} on:input={handleValueChange} type={type === 'number' ? 'number' : 'text'}>
     {/if}
     {#if !hideRemove}
         <button class="button-alt button-negative" tabindex="-1" on:click={handleDelete}>Remove</button>
