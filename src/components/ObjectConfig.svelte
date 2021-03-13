@@ -5,7 +5,6 @@ import ValueConfig from './ValueConfig.svelte';
     
 export let value = {};
 $: fields = value.fields;
-$: labelIsValid = (index) => !!fields[index].label;
 $: presenceIsValid = (index) => fields[index].presence === Number(fields[index].presence) &&
     fields[index].presence >= 0 && fields[index].presence <= 1;
 
@@ -52,7 +51,7 @@ const handlePresenceChange = (changeIndex) => (event) => {
         <div class="value-controls">
             <div class="form-control">
                 <label for="label">Label</label>
-                <input id="label" value={label} class:error={!labelIsValid(index)} on:input={handleLabelChange(index)} type="text">
+                <input id="label" value={label} on:input={handleLabelChange(index)} type="text">
             </div>
             <div class="form-control">
                 <label for="presence">Presence</label>

@@ -1,5 +1,5 @@
-const primitive = {
-    type: 'primitive',
+const fixed = {
+    type: 'fixed',
     values: ['hello']
 };
 
@@ -17,8 +17,8 @@ const array = {
     value: { ...number }
 };
 
-const multi = {
-    type: 'multi',
+const pool = {
+    type: 'pool',
     values: [{ value: { ...number }, weight: 1 }]
 };
 
@@ -28,17 +28,17 @@ const object = {
 };
 
 export const typeDefaults = {
-    primitive,
+    fixed,
     number,
     array,
-    multi,
+    pool,
     object,
 };
 
 export const typeExamples = {
-    primitive: {"type":"primitive","values":["one","two","three",null]},
+    fixed: {"type":"fixed","values":["one","two","three",null]},
     number: {"type":"number","min":0,"max":10,"scale":2},
     array: {"type":"array","minlength":10,"maxlength":20,"value":{"type":"number","min":0,"max":10,"scale":0}},
-    object: {"type":"object","fields":[{"label":"endpointsNeeded","value":{"type":"number","min":0,"max":10,"scale":0},"presence":1},{"label":"isPoor","value":{"type":"primitive","values":[true,false]},"presence":0.5}]},
-    multi: {"type":"multi","values":[{"value":{"type":"object","fields":[{"label":"isPoor","value":{"type":"primitive","values":[true,false]},"presence":1}]},"weight":3},{"value":{"type":"primitive","values":[null]},"weight":1}]}
+    object: {"type":"object","fields":[{"label":"endpointsNeeded","value":{"type":"number","min":0,"max":10,"scale":0},"presence":1},{"label":"isPoor","value":{"type":"fixed","values":[true,false]},"presence":0.5}]},
+    pool: {"type":"pool","values":[{"value":{"type":"object","fields":[{"label":"isPoor","value":{"type":"fixed","values":[true,false]},"presence":1}]},"weight":3},{"value":{"type":"fixed","values":[null]},"weight":1}]}
 };

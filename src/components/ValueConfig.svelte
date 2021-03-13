@@ -1,10 +1,10 @@
 <script>
 import { createEventDispatcher } from 'svelte';
 import ArrayConfig from './ArrayConfig.svelte';
-import MultiConfig from './MultiConfig.svelte';
+import PoolConfig from './PoolConfig.svelte';
 import NumberConfig from './NumberConfig.svelte';
 import ObjectConfig from './ObjectConfig.svelte';
-import PrimitiveConfig from './PrimitiveConfig.svelte';
+import FixedConfig from './FixedConfig.svelte';
 
 import { typeDefaults } from '../utils/typeDefaults';
 
@@ -40,12 +40,12 @@ const handleValueChange = (event) => {
     <div class="type-selector">
         {#if value.type === 'number'}
             <NumberConfig on:valuechange={handleValueChange} {value} />
-        {:else if value.type === 'primitive'}
-            <PrimitiveConfig on:valuechange={handleValueChange} {value} />
+        {:else if value.type === 'fixed'}
+            <FixedConfig on:valuechange={handleValueChange} {value} />
         {:else if value.type === 'array'}
             <ArrayConfig on:valuechange={handleValueChange} {value} />
-        {:else if value.type === 'multi'}
-            <MultiConfig on:valuechange={handleValueChange} {value} />
+        {:else if value.type === 'pool'}
+            <PoolConfig on:valuechange={handleValueChange} {value} />
         {:else if value.type === 'object'}
             <ObjectConfig on:valuechange={handleValueChange} {value} />
         {/if}

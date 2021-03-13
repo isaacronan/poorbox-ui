@@ -97,11 +97,11 @@ const handleSaveConfig = () => {
 <main>
     <p>
         Create endpoints to return complex random data structures. Use the types
-        <span on:click={handleDefault('primitive')} class="button-primary" tabindex="-1">primitive</span>,
+        <span on:click={handleDefault('fixed')} class="button-primary" tabindex="-1">fixed</span>,
         <span on:click={handleDefault('number')} class="button-primary" tabindex="-1">number</span>,
         <span on:click={handleDefault('array')} class="button-primary" tabindex="-1">array</span>,
         <span on:click={handleDefault('object')} class="button-primary" tabindex="-1">object</span>, and
-        <span on:click={handleDefault('multi')} class="button-primary" tabindex="-1">multi</span>.
+        <span on:click={handleDefault('pool')} class="button-primary" tabindex="-1">pool</span>.
     </p>
     <div class="previews">
         <textarea spellcheck="false" placeholder="Paste existing config or URL..." value={JSON.stringify(rootValue)} on:input={handlePreloadedData} type="text" />
