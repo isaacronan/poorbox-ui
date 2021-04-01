@@ -1,5 +1,6 @@
 <script>
 import { createEventDispatcher } from 'svelte';
+import { generateID } from '../utils/misc';
 
 export let value = {};
 $: min = value.min;
@@ -11,6 +12,7 @@ $: maxIsLow = minIsValid && maxIsValid && min > max;
 $: scaleIsValid = scale === Number(scale) && scale >= 0 && Number.isInteger(scale);
 
 const dispatch = createEventDispatcher();
+const id = generateID();
 
 const handleChange = (event) => {
     const asNumber = Number(event.target.value);
@@ -22,15 +24,15 @@ const handleChange = (event) => {
 </script>
 <div class="value-controls">
     <div class="form-control">
-        <label for="min">Min</label>
-        <input id="min" name="min" value={min} class:error={!minIsValid} on:input={handleChange} type="number">
+        <label for="min-{id}">Min</label>
+        <input id="min-{id}" name="min" value={min} class:error={!minIsValid} on:input={handleChange} type="number">
     </div>
     <div class="form-control">
-        <label for="max">Max</label>
-        <input id="max" name="max" value={max} class:error={!maxIsValid || maxIsLow} on:input={handleChange} type="number">
+        <label for="max-{id}">Max</label>
+        <input id="max-{id}" name="max" value={max} class:error={!maxIsValid || maxIsLow} on:input={handleChange} type="number">
     </div>
     <div class="form-control">
-        <label for="scale">Decimals</label>
-        <input id="scale" name="scale" value={scale} class:error={!scaleIsValid} on:input={handleChange} type="number">
+        <label for="scale-{id}">Decimals</label>
+        <input id="scale-{id}" name="scale" value={scale} class:error={!scaleIsValid} on:input={handleChange} type="number">
     </div>
 </div>

@@ -1,5 +1,6 @@
 <script>
 import { createEventDispatcher } from 'svelte';
+import { generateID } from '../utils/misc';
 import { typeDefaults } from '../utils/typeDefaults';
 import ValueConfig from './ValueConfig.svelte';
     
@@ -9,6 +10,7 @@ $: presenceIsValid = (index) => fields[index].presence === Number(fields[index].
     fields[index].presence >= 0 && fields[index].presence <= 1;
 
 const dispatch = createEventDispatcher();
+const id = generateID();
 
 const handleAdd = () => {
     dispatch('valuechange', {
@@ -50,12 +52,12 @@ const handlePresenceChange = (changeIndex) => (event) => {
     {#each fields as { label, value: existingValue, presence }, index}
         <div class="value-controls">
             <div class="form-control">
-                <label for="label">Label</label>
-                <input id="label" value={label} on:input={handleLabelChange(index)} type="text">
+                <label for="label{index}-{id}">Label</label>
+                <input id="label{index}-{id}" value={label} on:input={handleLabelChange(index)} type="text">
             </div>
             <div class="form-control">
-                <label for="presence">Presence</label>
-                <input id="presence" value={presence} class:error={!presenceIsValid(index)} on:input={handlePresenceChange(index)} type="number">
+                <label for="presence{index}-{id}">Presence</label>
+                <input id="presence{index}-{id}" value={presence} class:error={!presenceIsValid(index)} on:input={handlePresenceChange(index)} type="number">
             </div>
             <div class="form-control">
                 <button class="button button-negative" tabindex="-1" on:click={handleDelete(index)}>Remove Field</button>

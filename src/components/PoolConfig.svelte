@@ -1,5 +1,6 @@
 <script>
 import { createEventDispatcher } from 'svelte';
+import { generateID } from '../utils/misc';
 import { typeDefaults } from '../utils/typeDefaults';
 import ValueConfig from './ValueConfig.svelte';
     
@@ -9,6 +10,7 @@ $: weightIsValid = (index) => values[index].weight === Number(values[index].weig
     values[index].weight >= 0 && Number.isInteger(values[index].weight);
 
 const dispatch = createEventDispatcher();
+const id = generateID();
 
 const handleAdd = () => {
     dispatch('valuechange', {
@@ -43,8 +45,8 @@ const handleWeightChange = (changeIndex) => (event) => {
     {#each values as { value: existingValue, weight }, index}
         <div class="value-controls">
             <div class="form-control">
-                <label for="weight">Weight</label>
-                <input id="weight" value={weight} class:error={!weightIsValid(index)} on:input={handleWeightChange(index)} type="number">
+                <label for="weight{index}-{id}">Weight</label>
+                <input id="weight{index}-{id}" value={weight} class:error={!weightIsValid(index)} on:input={handleWeightChange(index)} type="number">
             </div>
             {#if values.length > 1}
                 <div class="form-control">

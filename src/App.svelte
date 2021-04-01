@@ -17,7 +17,6 @@ $: rootValue = historyIndex === null ? {} : valueHistory[historyIndex];
 
 const handleValueChange = (event) => {
     updateValue(event.detail);
-    console.log(valueHistory[historyIndex]);
 };
 
 const updateValue = (value) => {
